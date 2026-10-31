@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 90" preserveAspectRatio="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffa347"/>
+      <stop offset="1" stop-color="#e05f12"/>
+    </linearGradient>
+  </defs>
+  <!-- Jack-o'-lantern grin: curved top, round belly, two teeth above, one below -->
+  <path fill="url(#g)" d="M2 6 Q52 16 84 19 L84 33 L106 33 L106 21 Q150 24 194 21 L194 33 L216 33 L216 19 Q248 16 298 6 C300 58 244 89 162 89 L162 77 L138 77 L138 89 C56 89 0 58 2 6 Z"/>
+</svg>
