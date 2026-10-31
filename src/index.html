@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Le photomaton d'Halloween de Cox Animation : une photo de votre petit monstre dans un cadre qui fait peur. Rien n'est enregistré." />
+  <meta name="theme-color" content="#1b1030" />
+  <meta name="color-scheme" content="dark" />
+  <title>Photomaton d'Halloween · Cox Animation</title>
+  <link rel="preload" href="assets/fonts/creepster.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cellipse cx='30' cy='58' rx='26' ry='34' fill='%23e05f12'/%3E%3Cellipse cx='70' cy='58' rx='26' ry='34' fill='%23e05f12'/%3E%3Cellipse cx='50' cy='58' rx='28' ry='37' fill='%23ff8a2a'/%3E%3Crect x='46' y='12' width='8' height='14' rx='3' fill='%233f7d2a'/%3E%3Cpath d='M32 52 L40 40 L48 52Z M52 52 L60 40 L68 52Z M32 66 Q50 84 68 66 Z' fill='%233b1a08'/%3E%3C/svg%3E" />
+</head>
+<body>
+  <div class="sky" aria-hidden="true"></div>
+
+  <main class="app">
+    <header class="brand">
+      <a class="brand__link" href="https://www.cox-anim.fr" target="_blank" rel="noopener">
+        <span class="brand__logo-wrap">
+          <img class="brand__logo" src="assets/logo-spooky.png" alt="" width="290" height="433" />
+        </span>
+        <span class="brand__text">
+          <span class="brand__name">Cox Animation</span>
+          <span class="brand__tag">Créateurs d'enthousiasme à Cox</span>
+        </span>
+      </a>
+    </header>
+
+    <!-- 1. Accueil -->
+    <section class="card" id="view-intro">
+      <p class="eyebrow">Halloween 2026</p>
+      <h1 class="spooky">Le photomaton<br />qui fait peur&nbsp;!</h1>
+      <p class="lead">Prenez votre petit monstre en photo, choisissez un cadre d'Halloween… et repartez avec un souvenir terrifiant&nbsp;🎃</p>
+
+      <div class="privacy">
+        <span class="privacy__icon" aria-hidden="true">🔒</span>
+        <p><strong>Aucune photo n'est enregistrée.</strong> Tout se passe dans votre téléphone&nbsp;: rien n'est envoyé, rien n'est conservé. Quand vous fermez la page, tout disparaît.</p>
+      </div>
+
+      <div class="stack">
+        <button class="btn btn--grin btn--glow" id="btn-start" type="button">Ouvrir l'appareil photo</button>
+        <label class="btn btn--ghost btn--block" for="file-input"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V4m0 0L7.5 8.5M12 4l4.5 4.5M4 14v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4"/></svg> ou choisir une photo existante</label>
+        <input class="visually-hidden" id="file-input" type="file" accept="image/*" />
+      </div>
+      <p class="error" id="intro-error" role="alert" hidden></p>
+    </section>
+
+    <!-- 2. Prise de vue -->
+    <section class="card card--tight" id="view-camera" hidden>
+      <div class="stage">
+        <canvas class="stage__canvas" id="preview" width="720" height="900" aria-label="Aperçu de la photo avec le cadre"></canvas>
+      </div>
+
+      <div class="frames" role="radiogroup" aria-label="Choix du cadre" data-frames></div>
+
+      <div class="controls">
+        <button class="round round--small" id="btn-back" type="button" aria-label="Retour"><span aria-hidden="true">←</span></button>
+        <button class="shutter" id="btn-shoot" type="button" aria-label="Prendre la photo"></button>
+        <button class="round round--small" id="btn-flip" type="button" aria-label="Changer de caméra"><span aria-hidden="true">🔄</span></button>
+      </div>
+      <p class="hint">Le cadre est ajouté directement sur votre téléphone.</p>
+    </section>
+
+    <!-- 3. Résultat -->
+    <section class="card card--tight" id="view-result" hidden>
+      <img class="photo" id="photo" alt="Votre photo d'Halloween avec son cadre" />
+
+      <div class="frames" role="radiogroup" aria-label="Changer de cadre" data-frames></div>
+
+      <div class="stack">
+        <a class="btn btn--grin" id="btn-save" download="halloween-cox-animation.jpg">Enregistrer la photo</a>
+        <button class="btn btn--ghost btn--block" id="btn-again" type="button"><span aria-hidden="true">📸</span> Prendre une autre photo</button>
+      </div>
+
+      <!-- Proposition de partage, volontairement discrète -->
+      <div class="share" id="share">
+        <p class="share__ask">Envie de partager le frisson sur les réseaux&nbsp;?</p>
+        <div class="share__actions" id="share-ask">
+          <button class="link" id="btn-share" type="button">Oui, partager</button>
+          <span aria-hidden="true">·</span>
+          <button class="link" id="btn-noshare" type="button">Non merci</button>
+        </div>
+        <div class="networks" id="networks" hidden>
+          <button class="net net--facebook" type="button" data-net="facebook">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 21v-7h2.3l.4-2.8h-2.7V9.5c0-.8.2-1.4 1.4-1.4h1.4V5.6c-.3 0-1.1-.1-2.1-.1-2.1 0-3.5 1.3-3.5 3.6v2.1H8.4V14h2.3v7z"/></svg>
+            <span>Facebook</span>
+          </button>
+          <button class="net net--instagram" type="button" data-net="instagram">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/></svg>
+            <span>Instagram</span>
+          </button>
+          <button class="net net--tiktok" type="button" data-net="tiktok">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M16.5 3c.3 2.2 1.7 3.7 4 3.9v3c-1.5 0-2.8-.4-4-1.2v6.1a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.1v3.1a2.6 2.6 0 1 0 1.7 2.4V3h3z"/></svg>
+            <span>TikTok</span>
+          </button>
+          <button class="net net--snapchat" type="button" data-net="snapchat">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" stroke="#111" stroke-width="1.4" stroke-linejoin="round" d="M12 3c3 0 5 2.2 5 5.2v2.3l1.6-.5c.6 0 .9.6.4 1l-1.8 1c.6 1.8 2 3.1 3.6 3.6-.2.6-1.2.9-2.3 1.1l-.3 1.2-1.6-.2c-1 0-1.8 1.3-4.6 1.3s-3.6-1.3-4.6-1.3l-1.6.2-.3-1.2c-1.1-.2-2.1-.5-2.3-1.1 1.6-.5 3-1.8 3.6-3.6l-1.8-1c-.5-.4-.2-1 .4-1l1.6.5V8.2C7 5.2 9 3 12 3z"/></svg>
+            <span>Snapchat</span>
+          </button>
+        </div>
+        <p class="share__hint" id="share-hint" role="status" hidden></p>
+      </div>
+
+      <p class="privacy privacy--inline"><span aria-hidden="true">🔒</span> Cette photo n'existe que sur votre téléphone. Nous ne la voyons pas et ne la gardons pas.</p>
+    </section>
+
+    <!-- Prochain événement -->
+    <aside class="xmas" id="xmas" hidden>
+      <p class="xmas__eyebrow">Prochain rendez-vous</p>
+      <h2 class="xmas__title"><span aria-hidden="true">🎄</span> Le marché de Noël</h2>
+      <p class="xmas__when">Dimanche 6 décembre · 9h – 17h<br />sous la halle de Cox · entrée libre</p>
+      <p class="xmas__desc">Le père Noël s'arrête à Cox&nbsp;! Artisans, chocolats, troc de jouets, balades à dos d'âne, maquillage et lettres au père Noël.</p>
+      <a class="btn btn--xmas btn--block" href="https://www.cox-anim.fr/evenement/marche-de-noel-4/" target="_blank" rel="noopener">Découvrir le programme <span aria-hidden="true">→</span></a>
+    </aside>
+
+    <footer class="foot">
+      <p>Sans inscription · sans cookie · aucune photo enregistrée<br />Proposé avec 🧡 par <a href="https://www.cox-anim.fr" target="_blank" rel="noopener">Cox Animation</a></p>
+    </footer>
+  </main>
+
+  <script src="app.js" defer></script>
+</body>
+</html>

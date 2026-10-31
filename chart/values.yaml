@@ -1,0 +1,75 @@
+# Default values for spooky-ladybug.
+
+replicaCount: 1
+
+image:
+  repository: docker.io/sryther/spooky-ladybug
+  tag: "1.0.0"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+# The container listens on 8080 (unprivileged nginx).
+containerPort: 8080
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}
+    # cert-manager.io/cluster-issuer: letsencrypt-prod
+  hosts:
+    - host: halloween.cox-anim.fr
+      paths:
+        - path: /
+          pathType: Prefix
+  tls: []
+    # - secretName: spooky-ladybug-tls
+    #   hosts:
+    #     - halloween.cox-anim.fr
+
+resources:
+  requests:
+    cpu: 10m
+    memory: 32Mi
+  limits:
+    cpu: 100m
+    memory: 64Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 2
+  targetCPUUtilizationPercentage: 80
+
+# Pod-level hardening. Matches the unprivileged nginx image (UID 101).
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 101
+  runAsGroup: 0
+  fsGroup: 101
+  seccompProfile:
+    type: RuntimeDefault
+
+# Container-level hardening.
+securityContext:
+  allowPrivilegeEscalation: false
+  readOnlyRootFilesystem: true
+  privileged: false
+  capabilities:
+    drop:
+      - ALL
+
+# Spread replicas and survive disruptions.
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

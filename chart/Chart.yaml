@@ -1,0 +1,15 @@
+apiVersion: v2
+name: spooky-ladybug
+description: Photomaton d'Halloween « Spooky Ladybug » — mini-app statique pour Cox Animation, sans aucun stockage.
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+keywords:
+  - halloween
+  - photobooth
+  - cox-animation
+  - static-site
+home: https://www.cox-anim.fr
+maintainers:
+  - name: Cox Animation
+    url: https://www.cox-anim.fr
